@@ -50,7 +50,9 @@ partree = optim.parsimony(njtree, matkphydat)
 partree = pratchet(matkphydat)
 
 ########	Ejercicio
-# Inferir el árbol de parsimonia para el alineamiento de rbcL
+# Inferir el árbol de parsimonia para el alineamiento de rbcL usando
+# las funciones optim.parsimony y pratchet, esta última corriendo 
+# por lo menos a lo largo de 100 iteraciones
 
 ####################################
 # Manipulación de árboles
@@ -67,19 +69,23 @@ tr$tip.label
 # Graficar los árboles
 plot(tr)
 
+# retirar margen
 plot(tr, no.margin=TRUE)
 
+# mostrar rayas al piso en los nombres
 plot(tr, no.margin=TRUE, underscore=TRUE)
 
+# distancia entre nombre de terminales y el arbol
 plot(tr, no.margin=TRUE, underscore=TRUE, label.offset=0.001)
 
+# Tama~no de la fuente de los nombres de las terminales
 plot(tr, no.margin=TRUE, underscore=TRUE, label.offset=0.001, cex=0.7)
 
 tr = ladderize(tr)
 
 ####### Ejercicio
 # Inserte un título y un subtítulo a la gráfica
-# con la función `title`
+# con la función `title` al arbol de NJ de la matriz rbcL
 
 
 #####################################
@@ -107,4 +113,11 @@ dev.off()
 
 #################   Ejercicio
 # Graficar la comparación topológica entre los árboles de NJ de matK y rbcL y guardarla como una gráfica
+
+# Una solución al ejercicio anterior:
+astab = cbind(njmatk$tip.label, njmatk$tip.label)
+png("comparacion.png", 2000, 1200)
+cophyloplot(njmatk, njrbcl, assoc = astab, length.line = 5, space = 200, gap = 10)
+dev.off()
+
 
