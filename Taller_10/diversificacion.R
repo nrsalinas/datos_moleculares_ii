@@ -14,22 +14,21 @@ axisPhylo()
 
 
 # Simular un arbol bird-death, lambda = 0.3, mu = 0.1, 50 terminales  
-t0 = pbtree(0.3, 0.1, n=50))
-plot(t0)
+t1 = pbtree(0.3, 0.1, n=50)
+plot(t1)
 axisPhylo()
 
 
 # Interaccion variables de linajes presentes y unidades de tiempo. 
 # El criterio de interrupcion de la simulacion debe senalar alguno de aquellas variables
-t0 = pbtree(0.3, 0.1, t=100))
-plot(t0)
+t2 = pbtree(0.3, 0.1, t=10)
+plot(t2)
 axisPhylo()
 
 
 # ¿Como es el arbol sin linajes extintos
 t0p = drop.extinct(t0)
 plot(t0p)
-
 
 
 # LTT plots - linages a traves del tiempo
@@ -63,15 +62,17 @@ ltt.plot(darters, log="y")
 lines(c(-25,0), c(1,200), lty=2, col='blue')
 
 # Grafica LTT observado vs distribucion nula Yule
-obsLambda = phytools:::qb(darters) # calculo rapido de especiacion observada
-trees = pbtree(b=obsLambda, n=Ntip(darters), t=max(nodeHeights(darters)), nsim=100, method='direct')
+yule.model = fit.yule(darters)
+obsLambda = yule.model$b # calculo rapido de especiacion observada
+trees = pbtree(b=obsLambda, t=max(nodeHeights(darters)), nsim=1000)
+obj = ltt(trees, plot=FALSE)
 plot(obj, col="grey")
 ltt(darters, add=TRUE, col="blue")
 
 
 # Ajuste de modelos
 yule.model = fit.yule(darters)
-
+plot(darters, show.tip.label=FALSE, type='fan')
 # Incorporando el submuestreo en el ajuste del modelo
 samp = 201/216
 yule.model = fit.yule(darters, rho=samp)
